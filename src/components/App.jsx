@@ -51,10 +51,12 @@ const App = () => {
   }, [initTime, timerIsActive]);
 
   const pauseTimer = () => {
+    clearInterval(timerId.current);
     setTimerIsActive(false);
   };
 
   const resumeTimer = () => {
+    setInitTime(initTime);
     setTimerIsActive(true);
   };
 
