@@ -1,7 +1,9 @@
+import { Button } from './PauseButton.styled';
+
 export const PauseButton = ({ onPause }) => {
   return (
-    <button type="button" onClick={onPause}>
+    <Button type="button" onClick={onPause}>
       Pause
-    </button>
+    </Button>
   );
 };
