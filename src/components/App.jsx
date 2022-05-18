@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { convertMs } from '../js/convertMs';
 
-import { TimerInput } from './TimerInput/';
-
 import { Section } from './Section';
+import { TimerInput } from './TimerInput/';
 import { TimerView } from './TimerView';
 import { PauseButton } from './TimerButtons/PauseButton';
-import { ResumeButton } from './TimerButtons/ResumeButton';
-import { ResetButton } from './TimerButtons/ResetButton';
-// import { Container } from './Container';
+import { ResumeResetButtons } from './TimerButtons/ResumeResetButtons';
+import { Notification } from './Notification';
 
 const DEFAULT_REMAINING_TIME = {
   days: '00',
@@ -25,8 +23,6 @@ const App = () => {
 
   const timerId = useRef(null);
 
-  const { days, hours, minutes, seconds } = remainingTime;
-
   const handleTimerDataSet = time => {
     setTimerIsActive(true);
     setTimerIsFinished(false);
@@ -41,12 +37,10 @@ const App = () => {
       if (timerIsActive) {
         setInitTime(initTime => initTime - 1000);
         setRemainingTime(convertMs(initTime));
-        console.log('tick');
 
         if (initTime < 1000) {
           resetTimer();
           setTimerIsFinished(true);
-          console.log('Fin');
         }
       }
     }, 1000);
@@ -71,10 +65,10 @@ const App = () => {
     setRemainingTime(DEFAULT_REMAINING_TIME);
   };
 
-  console.log(initTime);
-
   return (
     <Section>
+      <TimerView remainingTime={remainingTime} />
+
       {!timerIsActive && !initTime && (
         <TimerInput onTimerDataSet={handleTimerDataSet} />
       )}
@@ -82,15 +76,10 @@ const App = () => {
       {timerIsActive && initTime >= 0 && <PauseButton onPause={pauseTimer} />}
 
       {!timerIsActive && initTime && (
-        <>
-          <ResumeButton onResume={resumeTimer} />
-          <ResetButton onReset={resetTimer} />
-        </>
+        <ResumeResetButtons onResume={resumeTimer} onReset={resetTimer} />
       )}
 
-      <TimerView remainingTime={remainingTime} />
-
-      {timerIsFinished && <h1>Time is up!</h1>}
+      {timerIsFinished && <Notification />}
     </Section>
   );
 };
