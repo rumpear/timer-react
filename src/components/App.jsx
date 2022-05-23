@@ -56,7 +56,6 @@ const App = () => {
   };
 
   const resumeTimer = () => {
-    setInitTime(initTime);
     setTimerIsActive(true);
   };
 

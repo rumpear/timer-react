@@ -12,7 +12,7 @@ export const TimerInput = ({ onTimerDataSet }) => {
     const hours = e.target.hours.value * 1000 * 60 * 60;
     const days = e.target.days.value * 1000 * 60 * 60 * 24;
     let total = minutes + seconds + hours + days;
-    console.log(seconds);
+
     if (!seconds && !minutes && !hours && !days)
       return toast.warn('Please enter a time to start the countdown');
 
